@@ -1,89 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FunPay Abus</title>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Сохранение данных</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="container">
-
-  <header>
-    <h1>🔥 FunPay Account (C)</h1>
-    <p class="subtitle">Аккаунты без задержки на вывод</p>
-  </header>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab-btn active" data-tab="info">Основная</button>
-    <button class="tab-btn" data-tab="products">Товары</button>
-    <button class="tab-btn" data-tab="support">Поддержка</button>
-  </div>
-
-  <!-- INFO -->
-  <div id="info" class="tab-content active">
-    <div class="card">
-      <h2>Что это?</h2>
-      <p>Аккаунты FunPay с отключенной задержкой вывода (48 часов).</p>
-      <p>Купил → продал → сразу вывел деньги.</p>
+    <div class="container">
+        <h1>Ввод данных</h1>
+        
+        <div class="chat-window">
+            <div class="message bot">
+                Привет! Введи свои данные в формате:<br>
+                <strong>Ник Почта Телефон</strong><br>
+                (через пробел или с новой строки)
+            </div>
+            
+            <textarea id="input" placeholder="Например: Иван ivan@example.com +79161234567" rows="6"></textarea>
+            
+            <button onclick="sendData()">Отправить</button>
+        </div>
     </div>
 
-    <div class="card">
-      <h2>Преимущества</h2>
-      <p>
-        <p>Моментальный вывод</p>
-        <p>Без верификации</p>
-        <p>Готовые аккаунты</p>
-        <p>Полный доступ</p>
-      </p>
-    </div>
-
-    <div class="warning">
-      ВАЖНО ! После покупки заходить на аккаунт только через Sandboxie - Мера безопасности.
-    </div>
-  </div>
-
-  <!-- PRODUCTS -->
-  <div id="products" class="tab-content">
-
-    <div class="product-card" data-price="4500">
-      <div class="product-info">
-        <span class="badge">Аккаунт #1</span>
-        <h3>FunPay — Без задержки</h3>
-        <p>Возраст: ~8 месяцев • Отзывов: 40+</p>
-        <p class="price">4 500 ₽</p>
-      </div>
-      <button class="buy-btn">Купить</button>
-    </div>
-
-    <div class="product-card" data-price="6500">
-      <div class="product-info">
-        <span class="badge premium">Аккаунт #2</span>
-        <h3>FunPay — PRO</h3>
-        <p>Возраст: ~1.5 года • Отзывов: 120+</p>
-        <p class="price">6 500 ₽</p>
-      </div>
-      <button class="buy-btn">Купить</button>
-    </div>
-
-  </div>
-
-  <!-- SUPPORT -->
-  <div id="support" class="tab-content">
-    <div class="card">
-      <h2>Поддержка</h2>
-      <a href="https://t.me/your_username" class="support-link">@your_username</a>
-    </div>
-
-    <p class="footer-text">После оплаты бот пришлёт данные</p>
-  </div>
-
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
