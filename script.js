@@ -1,37 +1,37 @@
 const tg = window.Telegram.WebApp;
 
-tg.ready();
-tg.expand();
+tg.expand();                    // Разворачиваем на весь экран
+tg.MainButton.hide();           // Скрываем основную кнопку Telegram
 
-// темы Telegram
-document.documentElement.style.setProperty('--bg', tg.themeParams.bg_color || '#0d1117');
-
-// Tabs
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-    btn.classList.add('active');
-    document.getElementById(btn.dataset.tab).classList.add('active');
-  };
-});
-
-// Buy
-document.querySelectorAll('.buy-btn').forEach(btn => {
-  btn.onclick = () => {
-    const price = btn.parentElement.dataset.price;
-
-    if (confirm(`Оплатить ${price} ₽?`)) {
-      tg.sendData(JSON.stringify({ price }));
-      tg.showAlert("Перейди в бота для оплаты");
+async function sendData() {
+    const input = document.getElementById('input').value.trim();
+    
+    if (!input) {
+        tg.showAlert("Введите данные!");
+        return;
     }
-  };
-});
 
-// Bottom button
-tg.MainButton.setText('Поддержка');
-tg.MainButton.show();
-tg.MainButton.onClick(() => {
-  tg.openTelegramLink('https://t.me/your_username');
+    // Простой парсинг (можно улучшить)
+    const parts = input.replace(/\n/g, ' ').split(/\s+/);
+    const nick = parts[0] || '';
+    const email = parts.find(p => p.includes('@')) || '';
+    const phone = parts.find(p => p.match(/^\+?\d/)) || '';
+
+    const data = {
+        nick: nick,
+        email: email,
+        phone: phone,
+        timestamp: new Date().toLocaleString('ru-RU')
+    };
+
+    tg.sendData(JSON.stringify(data));   // Отправляем боту
+    tg.showAlert("Данные отправлены!");
+    
+    // Закрываем приложение через 1 сек
+    setTimeout(() => tg.close(), 1000);
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Mini App loaded');
 });
