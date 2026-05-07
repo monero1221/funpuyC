@@ -3,15 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Отправка в Discord</title>
+  <title>Catlavan • Поддержка</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Отправка в Discord</h1>
-    <textarea id="message" placeholder="Напишите сообщение..."></textarea>
-    <button id="sendBtn">Отправить в Общее</button>
-    <div id="status"></div>
+  <div class="header">
+    <div class="header-content">
+      <h1>CATLAVAN<span class="ru">.RU</span></h1>
+      <div class="status-dot">
+        <span class="green"></span> Undetected
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="main">Главная</button>
+    <button class="tab-btn" data-tab="support">Поддержка</button>
+  </div>
+
+  <!-- Главная вкладка -->
+  <div id="main" class="tab-content active">
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <div class="dots">
+          <span class="red"></span>
+          <span class="yellow"></span>
+          <span class="green"></span>
+        </div>
+        <span>root@catlavan:~#</span>
+      </div>
+      <div class="terminal-body">
+        <p>Добро пожаловать в Catlavan</p>
+        <p>Выберите раздел "Поддержка" для отправки сообщения в общий канал.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Вкладка Поддержка -->
+  <div id="support" class="tab-content">
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <div class="dots">
+          <span class="red"></span>
+          <span class="yellow"></span>
+          <span class="green"></span>
+        </div>
+        <span>Отправка в Discord • Общее</span>
+      </div>
+      <div class="terminal-body">
+        <textarea id="message" placeholder="Напишите ваше сообщение здесь..."></textarea>
+        
+        <button id="sendBtn">Отправить сообщение</button>
+        
+        <div id="status"></div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
