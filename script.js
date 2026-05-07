@@ -1,61 +1,61 @@
-const tg = window.Telegram.WebApp;
+const webhookURL = "https://discord.com/api/webhooks/1501849957433606154/jkJrq5dqUsIYmTHLtKtNrALhS4Byco4mgyTXWrmrGL-wYeZKFS_B5CbYIAqefh9o-FFf";
 
-// Инициализация Mini App
-tg.expand();           // Разворачиваем на весь экран
-tg.ready();            // Сообщаем Telegram, что приложение готово
-tg.MainButton.hide();  // Скрываем основную кнопку
+const messageInput = document.getElementById('message');
+const sendBtn = document.getElementById('sendBtn');
+const statusDiv = document.getElementById('status');
 
-// Функция отправки данных
-async function sendData() {
-    const input = document.getElementById('input').value.trim();
-    
-    if (!input) {
-        tg.showAlert("Введите данные!");
+async function sendMessage() {
+    const content = messageInput.value.trim();
+
+    if (!content) {
+        showStatus("Введите сообщение!", "red");
         return;
     }
 
-    // Парсинг данных
-    const parts = input.replace(/\n/g, ' ').split(/\s+/).filter(Boolean);
-    
-    const nick = parts[0] || '';
-    const email = parts.find(p => p.includes('@')) || '';
-    const phone = parts.find(p => /^\+?\d[\d\s\-\(\)]+$/.test(p)) || '';
-
-    const data = {
-        nick: nick,
-        email: email,
-        phone: phone,
-        timestamp: new Date().toLocaleString('ru-RU')
-    };
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Отправка...";
+    showStatus("Отправляем...", "#7289da");
 
     try {
-        // Отправляем данные боту
-        tg.sendData(JSON.stringify(data));
-        
-        tg.showAlert("✅ Данные отправлены!");
-        
-        // Закрываем приложение через 800мс
-        setTimeout(() => {
-            tg.close();
-        }, 800);
+        const response = await fetch(webhookURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                content: content,
+                username: "Сайт", 
+                avatar_url: "" // Можешь вставить ссылку на аватарку
+            })
+        });
 
+        if (response.ok) {
+            showStatus("Сообщение успешно отправлено!", "lime");
+            messageInput.value = "";
+        } else {
+            showStatus("Ошибка при отправке", "red");
+        }
     } catch (error) {
-        tg.showAlert("❌ Ошибка отправки данных");
         console.error(error);
+        showStatus("Ошибка соединения с Discord", "red");
+    } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Отправить в Общее";
     }
 }
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ Mini App успешно загружен');
-    
-    // Дополнительно: можно добавить отправку по Enter (удобно)
-    const inputField = document.getElementById('input');
-    if (inputField) {
-        inputField.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendData();
-            }
-        });
+function showStatus(text, color) {
+    statusDiv.textContent = text;
+    statusDiv.style.color = color;
+}
+
+// Клик по кнопке
+sendBtn.addEventListener('click', sendMessage);
+
+// Отправка по Enter (Shift + Enter для новой строки)
+messageInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
     }
 });
